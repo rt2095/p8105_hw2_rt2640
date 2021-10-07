@@ -3,8 +3,9 @@ title: "p8105_hw2_rt2640.Rmd"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r loading the necessary libraries}
+library(tidyverse)
+library(readxl)
 ```
 
-
+```{r question 1}
