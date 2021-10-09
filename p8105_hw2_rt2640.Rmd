@@ -6,20 +6,35 @@ output: github_document
 ```{r loading the necessary libraries}
 library(tidyverse)
 library(readxl)
+library(dplyr)
 ```
 
+### Question 1
+
+#### Part 1
 ```{r question 1 part 1}
 mr_tw_data = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N535") %>%
 janitor::clean_names() %>%
 drop_na(dumpster) %>%
   transform(sports_balls = as.integer(sports_balls))
 ```
+
+#### Part 2
+
 ```{r question 1 part 2}
 data_2019 = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2019 Precipitation", skip = 1) %>%
   drop_na(Month) %>%
-  mutate(year = "2019")
-
+  mutate(year = "2019") %>%
+  relocate("year")
 
 data_2018 = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2018 Precipitation", skip = 1) %>%
   drop_na(Month) %>% 
-  mutate(year = "2018")
+  mutate(year = "2018") %>%
+   relocate("year")
+```
+
+```{r}
+prcp_tidy = bind_rows(data_2018, data_2019) %>%
+  janitor::clean_names()
+
+
