@@ -37,4 +37,9 @@ data_2018 = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx"
 prcp_tidy = bind_rows(data_2018, data_2019) %>%
   janitor::clean_names()
 
+```
+The Mr.Trash Wheel dataset contains `r nrow(mr_tw_data)` observations. It summarizes the amount of trash collected each month by Mr.Trash Wheel between 2014-2020. The data is further classified into types of litter collected including polystyrene, plastic bottles, cigarette butts etc. The data also includes the weight and volume of trash collected. For example, the median number of sports balls collection by Mr.Trash Wheel in 2019 is `r median(pull(mr_tw_data, var = sports_balls))`
+The dataset also includes monthly precipitation for each year between 2014 and 2020. The total precipitation in 2018 was `r sum(pull(data_2018, var = Total))`
+
+
 
