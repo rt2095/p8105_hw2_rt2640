@@ -9,7 +9,7 @@ library(readxl)
 ```
 
 ```{r question 1}
-mr_tw_data = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N408") %>%
+mr_tw_data = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "Mr. Trash Wheel", range = "A2:N535") %>%
   janitor::clean_names()
 ```
 
