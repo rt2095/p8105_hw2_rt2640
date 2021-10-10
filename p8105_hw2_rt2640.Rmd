@@ -93,9 +93,9 @@ une_df = read_csv(file = "hw2_dataset/unemployment.csv") %>%
 #### Merging datasets
 
 ```{r joining datasets}
-pols_snp_df = left_join(pols_df, snp_df, by = "year_month") %>%
+pols_snp_df = left_join(pols_df, snp_df, by = "year_month")
 
-pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month") %>%
+pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month")
  
 
 ```
@@ -105,15 +105,31 @@ pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month") %>%
 #### Part 1
 
 ```{r}
-baby_df = read_csv(file = "hw2_dataset/Popular_Baby_Names.csv") %>%
+baby_df = read_csv(file = "hw2_dataset/Popular_Baby_Names.csv", col_types = "icccii") %>%
   janitor::clean_names() %>%
   distinct() %>%
   mutate(childs_first_name = tolower(childs_first_name),
          ethnicity = tolower(ethnicity),
          gender = tolower(gender))
+```
 
-                                
+#### Popularity of name Olivia over time among different ethnicities
 
+```{r}
+olivia_df = filter(baby_df, childs_first_name == "olivia")
+olivia_rank_df = pivot_wider(
+    olivia_df,
+    names_from = "year_of_birth",
+    values_from = "rank") %>%
+  select(-gender, -childs_first_name)
+```
+
+
+
+
+  
+  
+                              
 ```
   
 
