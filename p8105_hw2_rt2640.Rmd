@@ -6,7 +6,6 @@ output: github_document
 ```{r loading the necessary libraries}
 library(tidyverse)
 library(readxl)
-library(dplyr)
 ```
 
 ### Question 1
@@ -132,7 +131,7 @@ male_16_wnh_df = filter(baby_df, year_of_birth == "2016", gender == "male", ethn
 
 ggplot(male_16_wnh_df, aes(x = rank, y = count)) + 
   geom_point()
-
+```
 
   
 
