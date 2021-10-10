@@ -42,7 +42,7 @@ prcp_tidy = bind_rows(data_2018, data_2019) %>%
   janitor::clean_names()
 
 ```
-The Mr.Trash Wheel dataset contains `r nrow(mr_tw_data)` observations. It summarizes the amount of trash collected each month by Mr.Trash Wheel between 2014-2020. The data is further classified into types of litter collected including polystyrene, plastic bottles, cigarette butts etc. The data also includes the weight and volume of trash collected. For example, the median number of sports balls collection by Mr.Trash Wheel in 2019 is `r median(pull(mr_tw_data, var = sports_balls))` balls
+The Mr.Trash Wheel dataset contains `r nrow(mr_tw_data)` observations. It summarizes the amount of trash collected each month by Mr.Trash Wheel between 2014-2020. The data is further classified into types of litter collected including polystyrene, plastic bottles, cigarette butts etc. The data also includes the weight and volume of trash collected. For example, the median number of sports balls collection by Mr.Trash Wheel in 2019 is `r median(pull(mr_tw_data, var = sports_balls))` balls.
 The dataset also includes monthly precipitation for each year between 2014 and 2020. The total precipitation in 2018 was `r sum(pull(data_2018, var = Total))`
 
 
@@ -60,6 +60,7 @@ pols_df = read_csv(file = "hw2_dataset/pols-month.csv") %>%
   select(-prez_gop, -prez_dem, -day) %>%
     mutate(
     month = recode(month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7' = "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec")) %>%
+  arrange(year,month) %>%
     unite(year_month,c(year, month))
 ```
 
@@ -71,6 +72,7 @@ snp_df = read_csv(file = "hw2_dataset/snp.csv") %>%
   relocate("year") %>%
   mutate(
     month = recode(month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7'= "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec")) %>%
+  arrange(year,month) %>%
   unite(year_month,c(year, month))
 ```
 
@@ -83,6 +85,7 @@ une_df = read_csv(file = "hw2_dataset/unemployment.csv") %>%
     jan:dec,
     names_to = "month",
     values_to = "unemployment") %>%
+  arrange(year,month) %>%
   unite(year_month,c(year, month))
 
 ```
@@ -90,9 +93,10 @@ une_df = read_csv(file = "hw2_dataset/unemployment.csv") %>%
 #### Merging datasets
 
 ```{r joining datasets}
-pols_snp_df = left_join(pols_df, snp_df, by = "year_month")
+pols_snp_df = left_join(pols_df, snp_df, by = "year_month") %>%
 
-pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month")
+pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month") %>%
+ 
 
 ```
 
@@ -103,8 +107,14 @@ pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month")
 ```{r}
 baby_df = read_csv(file = "hw2_dataset/Popular_Baby_Names.csv") %>%
   janitor::clean_names() %>%
-  distinct()
+  distinct() %>%
+  mutate(childs_first_name = tolower(childs_first_name),
+         ethnicity = tolower(ethnicity),
+         gender = tolower(gender))
 
+                                
+
+```
   
 
 
