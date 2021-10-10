@@ -48,7 +48,7 @@ The dataset also includes monthly precipitation for each year between 2014 and 2
 
 ### Question 2
 
-#### Part 1
+#### Importing and Tidying the datasets
 
 ```{r Question 2 pols.csv}
 
@@ -82,11 +82,17 @@ une_df = read_csv(file = "hw2_dataset/unemployment.csv") %>%
   pivot_longer(
     jan:dec,
     names_to = "month",
-    values_to = "unemployment")
+    values_to = "unemployment") %>%
+  unite(year_month,c(year, month))
 
 ```
 
+#### Merging datasets
+
 ```{r joining datasets}
+pols_snp_df = left_join(pols_df, snp_df, by = "year_month")
+
+pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month")
 
 
 
