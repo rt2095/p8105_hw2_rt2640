@@ -70,7 +70,7 @@ snp_df = read_csv(file = "hw2_dataset/snp.csv") %>%
   select(-day) %>%
   relocate("year") %>%
   mutate(
-    month = recode(month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7'= "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec")) %>%
+    month = recode(month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7' = "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec")) %>%
   arrange(year,month) %>%
   unite(year_month,c(year, month))
 ```
@@ -96,7 +96,6 @@ pols_snp_df = left_join(pols_df, snp_df, by = "year_month")
 
 pols_snp_une_df = left_join(pols_snp_df, une_df, by = "year_month")
  
-
 ```
 
 ### Question 3
