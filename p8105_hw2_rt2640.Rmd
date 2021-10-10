@@ -25,12 +25,16 @@ drop_na(dumpster) %>%
 data_2019 = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2019 Precipitation", skip = 1) %>%
   drop_na(Month) %>%
   mutate(year = "2019") %>%
-  relocate("year")
+  relocate("year") %>%
+      mutate(
+    Month = recode(Month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7' = "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec"))
 
 data_2018 = read_excel("hw2_dataset/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2018 Precipitation", skip = 1) %>%
   drop_na(Month) %>% 
   mutate(year = "2018") %>%
-   relocate("year")
+   relocate("year") %>%
+      mutate(
+    Month = recode(Month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7' = "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec"))
 ```
 
 ```{r}
@@ -53,8 +57,10 @@ pols_df = read_csv(file = "hw2_dataset/pols-month.csv") %>%
   separate(mon,into = c("year", "month", "day")) %>%
   transform("month" = as.numeric(month)) %>%
   mutate(president = prez_gop + prez_dem) %>%
-  select(-prez_gop, -prez_dem, -day)
-  
+  select(-prez_gop, -prez_dem, -day) %>%
+    mutate(
+    month = recode(month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7' = "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec")) %>%
+    unite(year_month,c(year, month))
 ```
 
 ```{r Question 2 snp.csv}
@@ -62,7 +68,10 @@ snp_df = read_csv(file = "hw2_dataset/snp.csv") %>%
   janitor::clean_names() %>%
   separate(date,into = c("day", "month", "year")) %>%
   select(-day) %>%
-  relocate("year")
+  relocate("year") %>%
+  mutate(
+    month = recode(month,'1' = "jan", '2' = "feb", '3' = "mar", '4' = "apr", '5' = "may", '6' = "jun",'7'= "jul", '8' = "aug", '9' = "sep", '10' = "oct", '11' = "nov", '12' = "dec")) %>%
+  unite(year_month,c(year, month))
 ```
 
 
@@ -73,10 +82,13 @@ une_df = read_csv(file = "hw2_dataset/unemployment.csv") %>%
   pivot_longer(
     jan:dec,
     names_to = "month",
-    values_to = "unemployment") %>%
-  as.integer(factor(month, levels = month.abb))
+    values_to = "unemployment")
 
 ```
+
+```{r joining datasets}
+
+
 
   
 
