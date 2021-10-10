@@ -60,7 +60,25 @@ pols_df = read_csv(file = "hw2_dataset/pols-month.csv") %>%
 ```{r Question 2 snp.csv}
 snp_df = read_csv(file = "hw2_dataset/snp.csv") %>%
   janitor::clean_names() %>%
-  separate (date,into = c("day", "month", "year")) %>%
+  separate(date,into = c("day", "month", "year")) %>%
   select(-day) %>%
   relocate("year")
+```
+
+
+
+```{r Question 2 unemployment.csv}
+une_df = read_csv(file = "hw2_dataset/unemployment.csv") %>%
+  janitor::clean_names() %>%
+  pivot_longer(
+    jan:dec,
+    names_to = "month",
+    values_to = "unemployment") %>%
+  as.integer(factor(month, levels = month.abb))
+
+```
+
+  
+
+
 
